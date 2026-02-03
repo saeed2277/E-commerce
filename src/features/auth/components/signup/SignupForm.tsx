@@ -36,20 +36,20 @@ export default function SignupForm() {
   const onSubmit: SubmitHandler<formData> = async (values) => {
     try {
       const response = await signupAction(values);
-      if (response.success) {
+      if (response?.success) {
         toast.success(response.message);
         setTimeout(() => {
           router.push("/login");
         }, 3000);
       } else {
-        if (response.errors) {
+        if (response?.errors) {
           Object.keys(response.errors).forEach((field) => {
             setError(field as keyof formData, {
               message: response.errors[field],
             });
           });
         } else {
-          toast.error(response.message);
+          toast.error(response?.message);
         }
       }
     } catch (error) {
