@@ -14,10 +14,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginAction } from "../../server/login.action";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { setToken } from "../../server/auth.action";
+import { setAuth } from "../../store/auth.slice";
+import { useDispatch } from "react-redux";
+
 
 
 export default function LoginForm() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const {
     register,
     setError,
@@ -36,7 +41,11 @@ export default function LoginForm() {
   const onSubmit: SubmitHandler<LoginSchemaType> = async (values) => {
     try {
       const response =await loginAction(values);
-if(response?.success){
+if(response.success){
+await setToken(response.data.token, values.rememberMe as boolean);
+dispatch(setAuth({isAuthentication:true, userInfo:response.data.user}));
+
+
   toast.success(response?.message)
   setTimeout(()=>{
     router.push("/")

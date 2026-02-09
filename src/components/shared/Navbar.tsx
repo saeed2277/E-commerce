@@ -1,18 +1,13 @@
-'use client';
+"use client";
 import Image from "next/image";
 import logo from "../../assets/images/freshcart-logo.svg";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
-  faHeart,
-  faShoppingCart,
-  faUser,
   faPhone,
   faEnvelope,
   faUserPlus,
-  faIdCard,
-  faArrowRightFromBracket,
   faBars,
   faAngleDown,
   faPerson,
@@ -20,16 +15,27 @@ import {
   faBabyCarriage,
   faBriefcaseMedical,
   faEllipsis,
-  faBolt,
   faXmark,
+  faCartShopping,
+  faShoppingCart,
+  faBolt,
+  faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
+import { faIdCard, faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { AppState } from "@/src/store/store";
+import uselogout from "@/src/hooks/uselogout";
 
 export default function Navbar() {
+  const {logout}= uselogout();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-function toggleMenu() {
+  function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
   }
+  const { isAuthentication } = useSelector(
+    (appState: AppState) => appState.auth,
+  );
 
   return (
     <>
@@ -111,7 +117,7 @@ function toggleMenu() {
                 href="/cart"
                 className="relative p-1 md:p-2 cursor-pointer hover:text-green-600 transition text-gray-700"
               >
-                <FontAwesomeIcon icon={faShoppingCart} className="w-5 h-5" />
+                <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
                 <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center">
                   0
                 </span>
@@ -128,39 +134,53 @@ function toggleMenu() {
                   Acount
                 </span>
               </Link>
-              <Link
-                href="/signup"
-                className="relative p-1 md:p-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
-              >
-                <FontAwesomeIcon icon={faUserPlus} className="w-6 h-6" />
-                <span className="text-gray-600 absolute -bottom-4 right-0 flex items-center justify-center text-sm">
-                  Signup
-                </span>
-              </Link>
-              <Link
-                href="/login"
-                className="relative p-1 md:p-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
-              >
-                <FontAwesomeIcon icon={faIdCard} className="w-5 h-5" />
-                <span className="text-gray-600 absolute -bottom-4 right-0 flex items-center justify-center text-sm">
-                  Login
-                </span>
-              </Link>
-              <Link
-                href="/login"
-                className="relative p-1 md:p-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
-              >
-                <FontAwesomeIcon
-                  icon={faArrowRightFromBracket}
-                  className="w-5 h-5"
-                />
-                <span className="text-gray-600 absolute -bottom-4 right-0 flex items-center justify-center text-sm">
-                  Logout
-                </span>
-              </Link>
+
+              {isAuthentication ? (
+                <Link
+                onClick={logout}
+                  href=""
+                  className="relative p-1 md:p-2 cursor-pointer hover:text-red-600 transition text-gray-700 "
+                >
+                  <FontAwesomeIcon
+                    icon={faArrowRightFromBracket}
+                    className="w-5 h-5"
+                  />
+                  <span className="text-gray-600 absolute -bottom-4 right-0 flex items-center justify-center text-sm">
+                    Logout
+                  </span>
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href="/signup"
+                    className="relative p-1 md:p-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
+                  >
+                    <FontAwesomeIcon icon={faUserPlus} className="w-6 h-6" />
+                    <span className="text-gray-600 absolute -bottom-4 right-0 flex items-center justify-center text-sm">
+                      Signup
+                    </span>
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="relative p-1 md:p-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
+                  >
+                    <FontAwesomeIcon icon={faIdCard} className="w-5 h-5" />
+                    <span className="text-gray-600 absolute -bottom-4 right-0 flex items-center justify-center text-sm">
+                      Login
+                    </span>
+                  </Link>
+                </>
+              )}
             </div>
-            <button className="lg:hidden bg-green-500 text-white p-1.5 rounded-lg cursor-pointer" onClick={toggleMenu}>
-              {isMenuOpen ? <FontAwesomeIcon icon={faXmark} className="w-6 h-6 " /> : <FontAwesomeIcon icon={faBars} className="w-6 h-6 " />}
+            <button
+              className="lg:hidden bg-green-500 text-white p-1.5 rounded-lg cursor-pointer"
+              onClick={toggleMenu}
+            >
+              {isMenuOpen ? (
+                <FontAwesomeIcon icon={faXmark} className="w-6 h-6 " />
+              ) : (
+                <FontAwesomeIcon icon={faBars} className="w-6 h-6 " />
+              )}
             </button>
           </div>
         </div>
@@ -253,7 +273,10 @@ function toggleMenu() {
         </div>
         {isMenuOpen && (
           <>
-            <div className=" background fixed inset-0 bg-black/50 z-20 cursor-pointer" onClick={toggleMenu}></div>
+            <div
+              className=" background fixed inset-0 bg-black/50 z-20 cursor-pointer"
+              onClick={toggleMenu}
+            ></div>
             <div className=" offcanvas fixed top-0 bottom-0 z-50 bg-white p-6 w-1/2 ">
               <div className="flex justify-between items-center mb-6 border-b border-gray-300 pb-4">
                 <Image
@@ -263,7 +286,10 @@ function toggleMenu() {
                   height={32}
                   className="md:w-32 h-auto object-contain"
                 />
-                <button className=" bg-gray-200 p-1.5 rounded-full cursor-pointer" onClick={toggleMenu}>
+                <button
+                  className=" bg-gray-200 p-1.5 rounded-full cursor-pointer"
+                  onClick={toggleMenu}
+                >
                   <FontAwesomeIcon icon={faXmark} className="w-5 h-5" />
                 </button>
               </div>
@@ -320,39 +346,47 @@ function toggleMenu() {
                 <div>
                   <h2 className="text-lg font-semibold mb-5">Account</h2>
                   <ul>
-                    <li className="mb-9 hover:bg-gray-100 p-1">
-                      <Link
-                        href="/signup"
-                        className="flex gap-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
-                      >
-                        <FontAwesomeIcon
-                          icon={faUserPlus}
-                          className="w-6 h-6"
-                        />
-                        <span className="text-gray-600 ">Signup</span>
-                      </Link>
-                    </li>
-                    <li className="mb-9 hover:bg-gray-100 p-1">
-                      <Link
-                        href="/login"
-                        className="flex gap-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
-                      >
-                        <FontAwesomeIcon icon={faIdCard} className="w-6 h-6" />
-                        <span className="text-gray-600 ">Login</span>
-                      </Link>
-                    </li>
-                    <li className="mt-9 hover:bg-gray-100 p-1">
-                      <Link
-                        href="/login"
-                        className="flex gap-2 cursor-pointer hover:text-green-600 transition text-gray-700"
-                      >
-                        <FontAwesomeIcon
-                          icon={faArrowRightFromBracket}
-                          className="w-5 h-5"
-                        />
-                        <span className="text-gray-600">Logout</span>
-                      </Link>
-                    </li>
+                    {isAuthentication ? (
+                      <li className="mb-9 hover:bg-gray-100 p-1">
+                        <Link
+                          href="/signup"
+                          className="flex gap-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
+                        >
+                          <FontAwesomeIcon
+                            icon={faUserPlus}
+                            className="w-6 h-6"
+                          />
+                          <span className="text-gray-600 ">Signup</span>
+                        </Link>
+                      </li>
+                    ) : (
+                      <>
+                        <li className="mb-9 hover:bg-gray-100 p-1">
+                          <Link
+                            href="/login"
+                            className="flex gap-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
+                          >
+                            <FontAwesomeIcon
+                              icon={faIdCard}
+                              className="w-6 h-6"
+                            />
+                            <span className="text-gray-600 ">Login</span>
+                          </Link>
+                        </li>
+                        <li className="mt-9 hover:bg-gray-100 p-1" onClick={logout}>
+                          <Link
+                            href=""
+                            className="flex gap-2 cursor-pointer hover:text-red-600 transition text-gray-700"
+                          >
+                            <FontAwesomeIcon
+                              icon={faArrowRightFromBracket}
+                              className="w-5 h-5"
+                            />
+                            <span className="text-gray-600">Logout</span>
+                          </Link>
+                        </li>
+                      </>
+                    )}
                   </ul>
                 </div>
               </div>

@@ -4,12 +4,21 @@ import Navbar from "../components/shared/Navbar";
 import Footer from "../components/shared/Footer";
 import "../lib/Fontawesome";
 import { ToastContainer, Bounce } from "react-toastify";
+import Providers from "../components/providers/Providers";
+import { verifyToken } from "../features/auth/server/auth.action";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+
+
+
+
+
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const valueAuth = await verifyToken()
   return (
     <html lang="en">
       <body>
-        <Navbar />
+       <Providers preloadedState={{auth:valueAuth}}>
+         <Navbar />
         {children}
         <Footer />
 
@@ -26,6 +35,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           theme="light"
           transition={Bounce}
         />
+       </Providers>
       </body>
     </html>
   );
