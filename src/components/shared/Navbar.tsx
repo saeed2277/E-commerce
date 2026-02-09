@@ -346,33 +346,7 @@ export default function Navbar() {
                 <div>
                   <h2 className="text-lg font-semibold mb-5">Account</h2>
                   <ul>
-                    {isAuthentication ? (
-                      <li className="mb-9 hover:bg-gray-100 p-1">
-                        <Link
-                          href="/signup"
-                          className="flex gap-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
-                        >
-                          <FontAwesomeIcon
-                            icon={faUserPlus}
-                            className="w-6 h-6"
-                          />
-                          <span className="text-gray-600 ">Signup</span>
-                        </Link>
-                      </li>
-                    ) : (
-                      <>
-                        <li className="mb-9 hover:bg-gray-100 p-1">
-                          <Link
-                            href="/login"
-                            className="flex gap-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
-                          >
-                            <FontAwesomeIcon
-                              icon={faIdCard}
-                              className="w-6 h-6"
-                            />
-                            <span className="text-gray-600 ">Login</span>
-                          </Link>
-                        </li>
+                    {isAuthentication ? 
                         <li className="mt-9 hover:bg-gray-100 p-1" onClick={logout}>
                           <Link
                             href=""
@@ -385,8 +359,36 @@ export default function Navbar() {
                             <span className="text-gray-600">Logout</span>
                           </Link>
                         </li>
+                     : 
+                      <>
+                      <li className="mb-9 hover:bg-gray-100 p-1">
+                        <Link
+                          href="/signup"
+                          className="flex gap-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
+                        >
+                          <FontAwesomeIcon
+                            icon={faUserPlus}
+                            className="w-6 h-6"
+                          />
+                          <span className="text-gray-600 ">Signup</span>
+                        </Link>
+                      </li>
+                      
+                        <li className="mb-9 hover:bg-gray-100 p-1">
+                          <Link
+                            href="/login"
+                            className="flex gap-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
+                          >
+                            <FontAwesomeIcon
+                              icon={faIdCard}
+                              className="w-6 h-6"
+                            />
+                            <span className="text-gray-600 ">Login</span>
+                          </Link>
+                        </li>
+
                       </>
-                    )}
+                    }
                   </ul>
                 </div>
               </div>
