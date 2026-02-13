@@ -1,5 +1,7 @@
+import HomeScreen from "../features/home/screens/home.screen";
+
 export default function Home() {
   return <>
-  <h1>Welcome to the Home Page</h1>
+<HomeScreen/>
   </>
 }

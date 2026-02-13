@@ -30,12 +30,13 @@ import uselogout from "@/src/hooks/uselogout";
 export default function Navbar() {
   const {logout}= uselogout();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { isAuthentication } = useSelector(
+    (appState: AppState) => appState.auth,
+  );
   function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
   }
-  const { isAuthentication } = useSelector(
-    (appState: AppState) => appState.auth,
-  );
+
 
   return (
     <>
@@ -277,7 +278,7 @@ export default function Navbar() {
               className=" background fixed inset-0 bg-black/50 z-20 cursor-pointer"
               onClick={toggleMenu}
             ></div>
-            <div className=" offcanvas fixed top-0 bottom-0 z-50 bg-white p-6 w-1/2 ">
+            <div className=" offcanvas fixed top-0 bottom-0 z-50 bg-white p-6 w-2/3 ">
               <div className="flex justify-between items-center mb-6 border-b border-gray-300 pb-4">
                 <Image
                   src={logo}
