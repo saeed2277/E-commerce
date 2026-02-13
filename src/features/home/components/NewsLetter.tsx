@@ -49,12 +49,12 @@ export default function NewsLetter() {
               </span>
             </div>
 
-            <form className="flex items-center gap-1 lg:max-w-xl">
+            <form className=" md:flex items-center gap-1 lg:max-w-xl">
               <input
                 aria-label="email"
                 type="email"
                 placeholder="you@example.com"
-                className="flex-1 px-4 py-3 rounded-xl bg-white border border-emerald-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+                className="flex-1 px-4 py-3 mb-1.5 rounded-xl bg-white border border-emerald-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-200"
               />
               <button
                 type="button"

@@ -17,11 +17,11 @@ export default function DealsBanner() {
 
           <div className="mt-3">
             <div className="flex items-center gap-3 mb-5">
-              <div className="text-5xl sm:text-4xl font-bold">40% <span className="text-5xl sm:text-4xl font-bold">OFF</span></div>
+              <div className="text-2xl sm:text-4xl font-bold">40% <span className="text-2xl sm:text-4xl font-bold">OFF</span></div>
               <div className="mt-1 text-sm opacity-90">Use code: <span className="font-bold">ORGANIC40</span></div>
             </div>
 
-            <Link href="/categories" className="ml-auto inline-flex items-center gap-3 bg-white text-emerald-700 px-5 py-3 rounded-full font-medium shadow hover:bg-gray-200 hover:text-emerald-700">
+            <Link href="/categories" className="ml-auto inline-flex items-center gap-3 bg-white text-emerald-700 px-3 py-2 lg:px-5 lg:py-3 rounded-full font-medium shadow hover:bg-gray-200 hover:text-emerald-700">
               <span>Shop Now</span>
               <span className="text-emerald-500"><FontAwesomeIcon icon={faArrowRight} /></span>
             </Link>
@@ -40,13 +40,13 @@ export default function DealsBanner() {
 
           <div className="mt-3 ">
             <div className="flex items-center gap-3 mb-5">
-              <div className="text-5xl sm:text-4xl font-bold">25% <span className="text-5xl sm:text-4xl font-bold">OFF</span></div>
+              <div className="text-2xl sm:text-4xl font-bold">25% <span className="text-2xl sm:text-4xl font-bold">OFF</span></div>
               <div className="mt-1 text-sm opacity-90">Use code: <span className="font-bold">FRESH25</span></div>
             </div>
 
-            <Link href="/categories" className="ml-auto inline-flex items-center gap-3 bg-white text-orange-600 px-5 py-3 rounded-full font-medium shadow hover:bg-gray-200 hover:text-orange-600">
+            <Link href="/categories" className="ml-auto inline-flex items-center gap-3 bg-white text-orange-600 px-2 py-2 lg:px-5 lg:py-3 rounded-full font-medium shadow hover:bg-gray-200 hover:text-orange-600">
               <span>Explore Now</span>
-              <span className="text-pink-500"><FontAwesomeIcon icon={faArrowRight} /></span>
+              <span className="text-orange-600"><FontAwesomeIcon icon={faArrowRight} /></span>
             </Link>
           </div>
         </div>
