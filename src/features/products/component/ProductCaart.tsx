@@ -41,7 +41,7 @@ const discount = priceAfterDiscount ? Math.round(((price - priceAfterDiscount) /
 
         <div className="mt-4">
           <p className="text-xs text-gray-400">{category.name}</p>
-          <Link href='' className="text-lg text-gray-800 mt-1 cursor-pointer line-clamp-2">{title}</Link>
+          <Link href={`/products/${id}`} className="text-lg text-gray-800 mt-1 cursor-pointer line-clamp-2">{title}</Link>
 
           <div className="flex items-center mt-3">
             <div className="flex items-center text-yellow-400">
