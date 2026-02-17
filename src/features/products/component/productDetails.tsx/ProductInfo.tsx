@@ -38,9 +38,9 @@ export default function ProductInfo({ product }: { product: Product }) {
   return (
     <section className="py-6 ">
       <div className="container mx-auto px-10">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr]  gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[35%_65%]  gap-6">
           <div >
-            <div className="rounded-xl bg-white shadow-sm p-4 sticky top-4">
+            <div className=" rounded-xl bg-white shadow-sm p-4 sticky top-4">
               <ImageGallery items={images.map((image)=>{
                 return{
 original: image,
@@ -83,16 +83,16 @@ thumbnail: image
                     {ratingsAverage} ({ratingsQuantity} reviews)
                   </span>
                 </div>
-                <div className="">
+                <div className="flex lg:flex-row items-start flex-col lg:items-center gap-2">
                   {onSale ? (
                     <>
                       <span className="text-2xl font-bold text-emerald-600">
                         {priceAfterDiscount} EGP
                       </span>
-                      <span className="text-sm text-gray-500 line-through ml-2">
+                      <span className="text-sm text-gray-500 line-through ">
                         {price} EGP
                       </span>
-                      <span className="bg-red-500 px-2 py-1 rounded-2xl text-white text-sm  ml-2">
+                      <span className="bg-red-500 px-2 py-1 rounded-2xl text-white text-sm ">
                         Save {discount}%{" "}
                       </span>
                     </>
@@ -131,7 +131,7 @@ thumbnail: image
           <p className="text-gray-600 leading-relaxed text-sm">{description}</p>
         </div>
 
-        <div>
+        <div className="mt-5">
           <div className="flex items-center justify-between mb-4">
             <label className="text-sm text-gray-700"> Quantity</label>
           </div>
@@ -162,16 +162,16 @@ thumbnail: image
 
         <div className="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
           <div className="text-sm text-gray-500">Total Price:</div>
-          <div className="text-lg font-bold text-emerald-600">
+          <div className="lg:text-lg lg:font-bold text-emerald-600">
             {count * (priceAfterDiscount || price)} EGP
           </div>
         </div>
         <div className="mt-6 flex gap-4">
-          <button className="cursor-pointer flex-1 inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-4 rounded-md">
-            <FontAwesomeIcon icon={faCartShopping} className="text-white" /> Add
+          <button className="w-full cursor-pointer text-sm lg:text-lg lg:inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-2 py-1 lg:font-semibold lg:py-3 lg:px-4 rounded-md">
+            <FontAwesomeIcon icon={faCartShopping} className="text-white"  /> Add
             to Cart
           </button>
-          <button className="cursor-pointer flex-1 inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-4 rounded-md">
+          <button className="w-full cursor-pointer text-sm lg:text-lg lg:inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-2 py-1 lg:font-semibold lg:py-3 lg:px-4 rounded-md">
             <FontAwesomeIcon icon={faBolt} className="text-white" /> Buy Now
           </button>
         </div>
@@ -187,11 +187,11 @@ thumbnail: image
             />{" "}
           </button>
         </div>
-      <div className="mt-5 border-t border-gray-100 pt-6">
-        <div className="max-w-10/12 flex justify-between items-center">
+      <div className=" mt-5 border-t border-gray-100 pt-6">
+        <div className=" max-w-10/12 xl:flex justify-between items-center">
           {/* Free Shipping */}
 
-          <div className="flex items-start justify-center gap-4">
+          <div className="flex mb-3 xl:mb-0 items-start xl:justify-center gap-4">
             <div className="flex items-center justify-center h-10 w-10 rounded-full bg-green-100">
               <FontAwesomeIcon
                 icon={faTruck}
@@ -210,7 +210,7 @@ thumbnail: image
 
           {/* Easy Returns */}
 
-          <div className="flex items-start justify-center gap-4">
+          <div className="flex mb-3 xl:mb-0 items-start justify-center gap-4">
             <div className="flex items-center justify-center h-10 w-10 rounded-full bg-green-100">
               <FontAwesomeIcon
                 icon={faArrowRotateLeft}

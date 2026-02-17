@@ -1,6 +1,7 @@
 import { faApple } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
 import {
+  faArrowRight,
   faCheck,
   faSquare,
   faStar,
@@ -61,19 +62,7 @@ export default function NewsLetter() {
                 className="cursor-pointer inline-flex items-center gap-3 bg-emerald-600 text-white px-3 py-3 rounded-lg shadow hover:bg-emerald-700"
               >
                 Subscribe
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 12h14M12 5l7 7-7 7"
-                  />
-                </svg>
+<FontAwesomeIcon icon={faArrowRight} />
               </button>
             </form>
 

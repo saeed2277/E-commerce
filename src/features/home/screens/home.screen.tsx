@@ -1,3 +1,4 @@
+import PromoBanners from "@/src/components/ui/PromoBanners";
 import Categories from "../components/Categores";
 import DealsBanner from "../components/DealsBanner";
 import FeturedProduct from "../components/FeturedProduct";
@@ -14,6 +15,7 @@ export default function HomeScreen() {
       <DealsBanner/>
       <FeturedProduct/>
       <NewsLetter/>
+      <PromoBanners/>
     </>
   );
 }
