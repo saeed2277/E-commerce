@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faTwitter, faInstagram, faPinterestP } from "@fortawesome/free-brands-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 
 
@@ -46,7 +47,7 @@ export default function Footer() {
               <li><a href="#" className="text-xl text-gray-600 hover:text-green-600">About Us</a></li>
               <li><a href="#" className="text-xl text-gray-600 hover:text-green-600">Contact Us</a></li>
               <li><a href="/privacy-policy" className="text-xl text-gray-600 hover:text-green-600">Privacy Policy</a></li>
-              <li><a href="/terms-of-service" className="text-xl text-gray-600 hover:text-green-600">Terms of Service</a></li>
+              <li><Link href="/terms" className="text-xl text-gray-600 hover:text-green-600">Terms of Service</Link></li>
               <li><a href="#" className="text-xl text-gray-600 hover:text-green-600">Shipping Policy</a></li>
             </ul>
           </div>

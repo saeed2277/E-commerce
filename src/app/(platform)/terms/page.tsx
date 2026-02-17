@@ -1,5 +1,10 @@
+import Term from "@/src/components/design/Term";
+import PromoBanners from "@/src/components/ui/PromoBanners";
+
+
 export default function Terms() {
     return <>
-    <h1>Terms Page</h1>
+    <Term/>
+    <PromoBanners/>
     </>;
 }
