@@ -22,21 +22,20 @@ import {
   faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faIdCard, faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AppState } from "@/src/store/store";
 import uselogout from "@/src/hooks/uselogout";
 
 export default function Navbar() {
-  const {logout}= uselogout();
+  const { logout } = uselogout();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { isAuthentication } = useSelector(
+  const { isAuthentication } = useSelector(
     (appState: AppState) => appState.auth,
   );
   function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
   }
-
 
   return (
     <>
@@ -80,15 +79,18 @@ export default function Navbar() {
             </div>
           </div>
           <div className="flex justify-between items-center h-22 px-4 md:px-0 ">
-            <h1>
-              <Image
-                src={logo}
-                alt="FreshCart Logo"
-                width={120}
-                height={32}
-                className="md:w-32 h-auto object-contain"
-              />
-            </h1>
+            <Link href="/">
+              {" "}
+              <h1>
+                <Image
+                  src={logo}
+                  alt="FreshCart Logo"
+                  width={120}
+                  height={32}
+                  className="md:w-32 h-auto object-contain"
+                />
+              </h1>
+            </Link>
 
             <div className=" w-1/2  mx-auto  hidden lg:flex">
               <div className="w-3/4 relative left-1/8">
@@ -138,7 +140,7 @@ export default function Navbar() {
 
               {isAuthentication ? (
                 <Link
-                onClick={logout}
+                  onClick={logout}
                   href=""
                   className="relative p-1 md:p-2 cursor-pointer hover:text-red-600 transition text-gray-700 "
                 >
@@ -347,34 +349,37 @@ export default function Navbar() {
                 <div>
                   <h2 className="text-lg font-semibold mb-5">Account</h2>
                   <ul>
-                    {isAuthentication ? 
-                        <li className="mt-9 hover:bg-gray-100 p-1" onClick={logout}>
-                          <Link
-                            href=""
-                            className="flex gap-2 cursor-pointer hover:text-red-600 transition text-gray-700"
-                          >
-                            <FontAwesomeIcon
-                              icon={faArrowRightFromBracket}
-                              className="w-5 h-5"
-                            />
-                            <span className="text-gray-600">Logout</span>
-                          </Link>
-                        </li>
-                     : 
-                      <>
-                      <li className="mb-9 hover:bg-gray-100 p-1">
+                    {isAuthentication ? (
+                      <li
+                        className="mt-9 hover:bg-gray-100 p-1"
+                        onClick={logout}
+                      >
                         <Link
-                          href="/signup"
-                          className="flex gap-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
+                          href=""
+                          className="flex gap-2 cursor-pointer hover:text-red-600 transition text-gray-700"
                         >
                           <FontAwesomeIcon
-                            icon={faUserPlus}
-                            className="w-6 h-6"
+                            icon={faArrowRightFromBracket}
+                            className="w-5 h-5"
                           />
-                          <span className="text-gray-600 ">Signup</span>
+                          <span className="text-gray-600">Logout</span>
                         </Link>
                       </li>
-                      
+                    ) : (
+                      <>
+                        <li className="mb-9 hover:bg-gray-100 p-1">
+                          <Link
+                            href="/signup"
+                            className="flex gap-2 cursor-pointer hover:text-green-600 transition text-gray-700 "
+                          >
+                            <FontAwesomeIcon
+                              icon={faUserPlus}
+                              className="w-6 h-6"
+                            />
+                            <span className="text-gray-600 ">Signup</span>
+                          </Link>
+                        </li>
+
                         <li className="mb-9 hover:bg-gray-100 p-1">
                           <Link
                             href="/login"
@@ -387,9 +392,8 @@ export default function Navbar() {
                             <span className="text-gray-600 ">Login</span>
                           </Link>
                         </li>
-
                       </>
-                    }
+                    )}
                   </ul>
                 </div>
               </div>

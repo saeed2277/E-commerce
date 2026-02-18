@@ -1,5 +1,7 @@
+import CartScreen from "@/src/features/cart/screens/cart.screen";
+
 export default function Cart() {
     return <>
-    <h1>Cart Page</h1>
+    <CartScreen/>
     </>;
 }
