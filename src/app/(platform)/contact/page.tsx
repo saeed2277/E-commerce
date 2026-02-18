@@ -1,5 +1,9 @@
+import ContactUs from "@/src/components/design/ContactUs";
+import PromoBanners from "@/src/components/ui/PromoBanners";
+
 export default function Contact() {
     return <>
-    <h1>Contact Page</h1>
+    <ContactUs />
+    <PromoBanners/>
     </>;
 }

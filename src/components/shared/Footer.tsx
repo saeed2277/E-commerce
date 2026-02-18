@@ -45,7 +45,7 @@ export default function Footer() {
             <h2 className="text-2xl font-bold mb-5">Quick Links</h2>
             <ul className="space-y-2">
               <li><a href="#" className="text-xl text-gray-600 hover:text-green-600">About Us</a></li>
-              <li><a href="#" className="text-xl text-gray-600 hover:text-green-600">Contact Us</a></li>
+              <li><Link href="/contact" className="text-xl text-gray-600 hover:text-green-600">Contact Us</Link></li>
               <li><a href="/privacy-policy" className="text-xl text-gray-600 hover:text-green-600">Privacy Policy</a></li>
               <li><Link href="/terms" className="text-xl text-gray-600 hover:text-green-600">Terms of Service</Link></li>
               <li><a href="#" className="text-xl text-gray-600 hover:text-green-600">Shipping Policy</a></li>

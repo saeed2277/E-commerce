@@ -1,5 +1,9 @@
+import Privacy from "@/src/components/design/Privacy";
+import PromoBanners from "@/src/components/ui/PromoBanners";
+
 export default function PrivacyPolicy() {
     return <>
-    <h1>Privacy Policy Page</h1>
+    <Privacy/>
+    <PromoBanners/>
     </>;
 }
