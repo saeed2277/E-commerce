@@ -8,8 +8,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Product } from "../type/product.type";
 import Link from "next/link";
 import Ratings from "@/src/components/ui/Ratings";
-import { addToCart } from "../../cart/server/cart.action";
+import { addToCart, getToCart } from "../../cart/server/cart.action";
 import { toast } from "react-toastify";
+import { setCartInfo } from "../../cart/store/cart.slice";
+import { useAppDispatch } from "@/src/store/store";
 
 export default function ProductCaart({ info }: { info: Product }) {
   const {
@@ -22,6 +24,7 @@ export default function ProductCaart({ info }: { info: Product }) {
     price,
     priceAfterDiscount,
   } = info;
+  const dispatch = useAppDispatch()
   const onSale = priceAfterDiscount ? priceAfterDiscount < price : false;
   const discount = priceAfterDiscount
     ? Math.round(((price - priceAfterDiscount) / price) * 100)
@@ -31,6 +34,8 @@ export default function ProductCaart({ info }: { info: Product }) {
         const response =await addToCart({productId:id});
         if(response.status === 'success'){
           toast.success(response.message);
+          const cartInfo =await getToCart()
+          dispatch(setCartInfo(cartInfo));
         }
         
       } catch (error) {

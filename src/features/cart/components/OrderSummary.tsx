@@ -29,7 +29,7 @@ const shiping = totalPrice > 500 ? 0 : 50;
 
               <button className="w-full bg-green-600 text-white py-2 rounded mt-6 cursor-pointer hover:bg-green-700 font-semibold flex items-center justify-center gap-2">
                 <FontAwesomeIcon icon={faUser} />
-                Login to Checkout
+                Checkout
               </button>
               <p className="text-center text-sm mt-2">
                 Don't have an account?{" "}

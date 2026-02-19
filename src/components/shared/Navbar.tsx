@@ -22,7 +22,7 @@ import {
   faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faIdCard, faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { AppState } from "@/src/store/store";
 import uselogout from "@/src/hooks/uselogout";
@@ -33,6 +33,7 @@ export default function Navbar() {
   const { isAuthentication } = useSelector(
     (appState: AppState) => appState.auth,
   );
+  const { numOfCartItems } = useSelector((state: AppState) => state.cart);
   function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
   }
@@ -121,9 +122,11 @@ export default function Navbar() {
                 className="relative p-1 md:p-2 cursor-pointer hover:text-green-600 transition text-gray-700"
               >
                 <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center">
-                  0
-                </span>
+                {numOfCartItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center">
+                    {numOfCartItems}
+                  </span>
+                )}
                 <span className="text-gray-600 absolute -bottom-4 right-1 flex items-center justify-center text-sm">
                   Cart
                 </span>
@@ -330,9 +333,11 @@ export default function Navbar() {
                         icon={faShoppingCart}
                         className="w-6 h-6"
                       />
-                      <span className="absolute -top-2 left-4 bg-green-500 text-white text-xs rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center">
-                        0
-                      </span>
+                      {numOfCartItems > 0 && (
+                        <span className="absolute -top-2 left-4 bg-green-500 text-white text-xs rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center">
+                          {numOfCartItems}
+                        </span>
+                      )}
                       <span className="text-gray-600">Cart</span>
                     </Link>
                   </li>
