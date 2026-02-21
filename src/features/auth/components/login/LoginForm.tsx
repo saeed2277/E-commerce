@@ -42,7 +42,7 @@ export default function LoginForm() {
     try {
       const response =await loginAction(values);
 if(response.success){
-await setToken(response.data.token, values.rememberMe as boolean);
+await setToken(response.data.token, values.rememberMe);
 dispatch(setAuth({isAuthentication:true, userInfo:response.data.user}));
 
 
@@ -51,7 +51,7 @@ dispatch(setAuth({isAuthentication:true, userInfo:response.data.user}));
     router.push("/")
   },3000)
 }else{
-  if(response.errors){
+  if(response?.errors){
     Object.keys(response.errors).forEach((key) => {
       setError(key as keyof LoginSchemaType, { message: response.errors[key] });
     })

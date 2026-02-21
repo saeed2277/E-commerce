@@ -14,73 +14,46 @@ export async function loginAction(Values: LoginSchemaType) {
 
       if (!errors[fieldName]) {
         errors[fieldName] = message;
-
-
-
-
       }
-
-
-
-
-
     });
 
-    return { success: false,
-       message: "Validation failed",
-      errors };
+    return { success: false, message: "Validation failed", errors };
   }
-try {
-
-  const {rememberMe,...requestData}=validatedData.data
-const options:AxiosRequestConfig = {
-  url: "https://ecommerce.routemisr.com/api/v1/auth/signin",
-  method: "POST",
-  data: requestData,
-};
-const{data}=await axios.request(options)
-
-if(data.message==="success"){
-  return {
-  success:true,
-  message:'Login successful',
-  data,
-}
-}else{  
-  return {
-  success:false,
-  message:'Login failed',
-}
-}
-}catch (error) {
-if(error instanceof AxiosError){
-  const errorMessage = error.response?.data.message;
-  if(errorMessage==="Incorrect email or password"){
-    return {
-      success: false,
-      message: 'Incorrect email or password',
-      errors: {
-        password: 'Incorrect email or password',
-      },
+  try {
+    const { rememberMe, ...requestData } = validatedData.data;
+    const options: AxiosRequestConfig = {
+      url: "https://ecommerce.routemisr.com/api/v1/auth/signin",
+      method: "POST",
+      data: requestData,
     };
-  }
+    const { data } = await axios.request(options);
+
+    if (data.message === "success") {
+      return {
+        success: true,
+        message: "Login successful",
+        data,
+      };
+    } else {
+      return {
+        success: false,
+        message: "Login failed",
+      };
+    }
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      const errorMessage = error.response?.data.message;
+      if (errorMessage === "Incorrect email or password") {
+        return {
+          success: false,
+          message: "Incorrect email or password",
+          errors: {
+            password: "Incorrect email or password",
+          },
+        };
+      }
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-  return {success: false,
-message: 'An error occurred during login',
-
-  }
-
-  };
-
+  return { success: false, message: "An error occurred during login" };
+}

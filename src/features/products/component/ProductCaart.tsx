@@ -1,9 +1,6 @@
-'use client'
+"use client";
 import { faHeart, faEye } from "@fortawesome/free-regular-svg-icons";
-import {
-  faArrowsRotate,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowsRotate, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Product } from "../type/product.type";
 import Link from "next/link";
@@ -12,6 +9,7 @@ import { addToCart, getToCart } from "../../cart/server/cart.action";
 import { toast } from "react-toastify";
 import { setCartInfo } from "../../cart/store/cart.slice";
 import { useAppDispatch } from "@/src/store/store";
+import { useState } from "react";
 
 export default function ProductCaart({ info }: { info: Product }) {
   const {
@@ -24,25 +22,43 @@ export default function ProductCaart({ info }: { info: Product }) {
     price,
     priceAfterDiscount,
   } = info;
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const onSale = priceAfterDiscount ? priceAfterDiscount < price : false;
   const discount = priceAfterDiscount
     ? Math.round(((price - priceAfterDiscount) / price) * 100)
     : 0;
-    const handleAddToCart = async()=>{
-      try {
-        const response =await addToCart({productId:id});
-        if(response.status === 'success'){
-          toast.success(response.message);
-          const cartInfo =await getToCart()
-          dispatch(setCartInfo(cartInfo));
-        }
-        
-      } catch (error) {
-        toast.error("Failed to add product to cart");
+  const [loading, setLoading] = useState(false);
+
+  const handleAddToCart = async () => {
+    if (loading) return;
+
+    let successMessage = "";
+    let isSuccess = false;
+
+    try {
+      setLoading(true);
+
+      const response = await addToCart({ productId: id });
+
+      if (response.status === "success") {
+        isSuccess = true;
+        successMessage = response.message;
+
+        const cartInfo = await getToCart();
+        dispatch(setCartInfo(cartInfo));
       }
+    } catch (error) {
+      isSuccess = false;
+    } finally {
+      setLoading(false);
     }
 
+    if (isSuccess) {
+      toast.success(successMessage);
+    } else {
+      toast.error("Failed to add product to cart");
+    }
+  };
   return (
     <article className="  bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden relative hover:shadow-lg transition-shadow hover:scale-[1.02] hover:transition-transform">
       <div className="p-4">
@@ -120,11 +136,16 @@ export default function ProductCaart({ info }: { info: Product }) {
               </span>
             )}
             <button
-            onClick={handleAddToCart}
+              onClick={handleAddToCart}
+              disabled={loading}
               aria-label="add"
-              className="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-colors cursor-pointer"
+              className="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-all duration-300 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              <FontAwesomeIcon icon={faPlus} />
+              {loading ? (
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              ) : (
+                <FontAwesomeIcon icon={faPlus} />
+              )}
             </button>
           </div>
         </div>

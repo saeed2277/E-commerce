@@ -5,7 +5,7 @@ export const LoginSchema = z.object({
   .nonempty('Email is required')
  .pipe(z.email('Invalid email address')),
   password: z.string().nonempty('Password is required'),
-  rememberMe: z.boolean().optional(),
+  rememberMe: z.boolean(),
 });
 
 export type LoginSchemaType = z.infer<typeof LoginSchema>;  

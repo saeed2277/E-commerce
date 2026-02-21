@@ -22,13 +22,15 @@ import {
   faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faIdCard, faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
-import { useState } from "react";
+import {useState } from "react";
 import { useSelector } from "react-redux";
 import { AppState } from "@/src/store/store";
 import uselogout from "@/src/hooks/uselogout";
 
+
 export default function Navbar() {
-  const { logout } = uselogout();
+
+  const {logout} = uselogout();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthentication } = useSelector(
     (appState: AppState) => appState.auth,
@@ -142,19 +144,20 @@ export default function Navbar() {
               </Link>
 
               {isAuthentication ? (
-                <Link
+                <button
+                type="button"
                   onClick={logout}
-                  href=""
-                  className="relative p-1 md:p-2 cursor-pointer hover:text-red-600 transition text-gray-700 "
+                  
+                  className="relative p-1 md:p-2 cursor-pointer hover:text-red-600 transition text-gray-700  "
                 >
                   <FontAwesomeIcon
                     icon={faArrowRightFromBracket}
-                    className="w-5 h-5"
+                    
                   />
                   <span className="text-gray-600 absolute -bottom-4 right-0 flex items-center justify-center text-sm">
                     Logout
                   </span>
-                </Link>
+                </button>
               ) : (
                 <>
                   <Link
