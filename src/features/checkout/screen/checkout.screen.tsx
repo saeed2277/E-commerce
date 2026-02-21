@@ -19,10 +19,14 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { removeAllProduct } from "../../cart/store/cart.slice";
+import PromoBanner from "@/src/components/ui/PromoBanners";
 
 export default function CheckoutScreen() {
   const [paymentMethod, setPaymentMethod] = useState<"cash" | "card">("cash");
-  const { cartId } = useSelector((state: AppState) => state.cart);
+  const { cartId, totalCartPrice,products } = useSelector(
+    (state: AppState) => state.cart,
+  );
+  const productCount = products.length;
   const router = useRouter();
   const dispatch = useAppDispatch();
   const {
@@ -73,8 +77,9 @@ export default function CheckoutScreen() {
       }
     } catch (error) {
       throw error;
-    } 
+    }
   };
+  const shiping = totalCartPrice > 500 ? 0 : 50;
   return (
     <>
       {
@@ -87,7 +92,14 @@ export default function CheckoutScreen() {
               >
                 Home
               </Link>
-              / Shoping Cart
+              /
+              <Link
+                href="/cart"
+                className="text-gray-500 hover:text-green-500 mx-1"
+              >
+                Cart
+              </Link>
+              / Complete Your Order
             </nav>
             <h1 className="text-3xl font-bold flex items-center">
               <FontAwesomeIcon
@@ -99,7 +111,7 @@ export default function CheckoutScreen() {
             <p className="text-gray-600 mt-2">
               You have
               <span className="text-green-600 font-semibold mx-0.5">
-                {} {1 ? "Item" : "Items"}
+                {productCount} {productCount === 1 ? "Item" : "Items"}
               </span>{" "}
               in your cart
             </p>
@@ -125,7 +137,7 @@ export default function CheckoutScreen() {
                     </h2>
                     <div className="flex justify-between px-4 text-gray-600 font-semibold text-sm">
                       <span>Subtotal</span>
-                      <span>{500} EGP</span>
+                      <span>{totalCartPrice} EGP</span>
                     </div>
                     <div className="flex justify-between mt-2 px-4 text-gray-600 font-semibold text-sm">
                       <span>
@@ -135,27 +147,31 @@ export default function CheckoutScreen() {
                         />{" "}
                         Shipping
                       </span>
-                      {/*           {shiping ? (
-            <span className="text-green-600">
-              Add {500 - totalPrice} EGP for Free Shiping
-            </span>
-          ) : (
-            <span className="text-green-600">Free</span>
-          )} */}
+                      {shiping ? (
+                        <>
+                          <span className="text-green-600">
+                            Add {500 - totalCartPrice} EGP for Free Shiping
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-green-600">Free </span>
+                        </>
+                      )}
                     </div>
                     <div className="flex justify-between mt-4 font-bold text-md border-t border-gray-300 pt-2 px-4">
                       <span>Total</span>
-                      <span className="text-green-600">{900} EGP</span>
-                    </div>
-
-                    
-                      {" "}
-                      <button className="w-full bg-green-600 text-white py-2 rounded shadow mt-6 cursor-pointer hover:bg-green-700 font-semibold flex items-center justify-center gap-2" type="submit">
-                        <FontAwesomeIcon icon={faShieldHalved} />
-                        Proceed to Payment
-                      </button>
-                    
-
+                      <span className="text-green-600">
+                        {totalCartPrice + shiping} EGP
+                      </span>
+                    </div>{" "}
+                    <button
+                      className="w-full bg-green-600 text-white py-2 rounded shadow mt-6 cursor-pointer hover:bg-green-700 font-semibold flex items-center justify-center gap-2"
+                      type="submit"
+                    >
+                      <FontAwesomeIcon icon={faShieldHalved} />
+                      Proceed to Payment
+                    </button>
                     <div className="px-6 pb-5 flex justify-center text-xs text-gray-500 mt-4 border-t border-gray-200 pt-2">
                       <div className="flex items-center gap-4">
                         <span className="flex items-center space-x-1 ">
@@ -188,6 +204,7 @@ export default function CheckoutScreen() {
           </div>
         </div>
       }
+      <PromoBanner/>
     </>
   );
 }

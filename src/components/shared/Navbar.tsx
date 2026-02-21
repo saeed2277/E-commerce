@@ -22,7 +22,7 @@ import {
   faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faIdCard, faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
-import {useState } from "react";
+import {useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AppState } from "@/src/store/store";
 import uselogout from "@/src/hooks/uselogout";
@@ -32,6 +32,7 @@ export default function Navbar() {
 
   const {logout} = uselogout();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const { isAuthentication } = useSelector(
     (appState: AppState) => appState.auth,
   );
@@ -146,7 +147,7 @@ export default function Navbar() {
               {isAuthentication ? (
                 <button
                 type="button"
-                  onClick={logout}
+                   onClick={logout} 
                   
                   className="relative p-1 md:p-2 cursor-pointer hover:text-red-600 transition text-gray-700  "
                 >

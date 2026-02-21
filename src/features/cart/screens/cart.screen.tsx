@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import { removeAllProduct } from "../store/cart.slice";
 import { deleteAllCards } from "../server/cart.action";
 import { toast } from "react-toastify";
+import PromoBanner from "@/src/components/ui/PromoBanners";
 
 export default function CartScreen() {
   const { numOfCartItems, products , totalCartPrice} = useSelector(
@@ -113,6 +114,7 @@ if(result.isConfirmed){
           </div>
         </div>
       </div>
+      <PromoBanner/>
     </>
   );
 }
