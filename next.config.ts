@@ -12,8 +12,16 @@ const nextConfig: NextConfig = {
         pathname: "/*/**",
       }
     ]
-  }
-
+  },
+async redirects() {
+  return[
+    {
+      source:'/allorders',
+      destination:'/orders',
+      permanent:true
+    }
+  ]
+},
 };
 
 export default nextConfig;

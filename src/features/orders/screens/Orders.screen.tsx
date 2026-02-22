@@ -11,7 +11,7 @@ import OrderCart from "../component/OrderCart";
 import { useSelector } from "react-redux";
 import { AppState } from "@/src/store/store";
 import { useEffect, useState } from "react";
-import { OrdersResponse } from "../types/orderType";
+import { Order, OrdersResponse } from "../types/orderType";
 
 export default function OrdersScreen() {
   const { userInfo } = useSelector((state: AppState) => state.auth);
@@ -20,17 +20,18 @@ export default function OrdersScreen() {
     return;
   }
   useEffect(() => {
-
-    
     const fetchOrders = async () => {
-      const response = await getUserOrder({id: userInfo.id});
+      const response = await getUserOrder({ id: userInfo.id });
       setOrder(response);
-      console.log(response)
     };
     fetchOrders();
   }, []);
-
-  if (!orders || orders.length ===0) {
+  const addNewOrder = (newOrder: Order) => {
+    setOrder((prevOrders) =>
+      prevOrders ? [...prevOrders, newOrder] : [newOrder],
+    );
+  };
+  if (!orders || orders.length === 0) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center px-4 mt-10">
         <div className="max-w-sm text-center">
@@ -101,11 +102,9 @@ export default function OrdersScreen() {
             </span>
           </div>
           <div className="space-y-4">
-{orders
-  .filter(order => order.shippingAddress?.details)
-  .map((order) => (
-    <OrderCart key={order._id} orderinfo={order} />
-  ))}
+            {orders.map((order) => (
+              <OrderCart key={order._id} orderinfo={order} />
+            ))}
           </div>
         </div>
       </div>

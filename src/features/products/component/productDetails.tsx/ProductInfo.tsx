@@ -30,6 +30,12 @@ import {
 import { AppState, useAppDispatch } from "@/src/store/store";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import {
+  addToWishlist,
+  deleteFromWishlist,
+  getLoggedUserWishlist,
+} from "@/src/features/wishlist/server/wishlist.action";
+import { setWishlistInfo } from "@/src/features/wishlist/store/wishlist.store";
 
 export default function ProductInfo({ product }: { product: Product }) {
   const {
@@ -50,8 +56,14 @@ export default function ProductInfo({ product }: { product: Product }) {
   const isLowStock = quantity > 0 && quantity < 10;
   const { products } = useSelector((state: AppState) => state.cart);
   const isInCart = products.some((item) => item.product._id === product._id);
+  const wishlistProducts = useSelector(
+    (state: AppState) => state.wishlist.data,
+  );
+  const isInWishlist = wishlistProducts.some((item) => item.id === product.id);
   const [count, setCount] = useState(1);
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const handleAddToCart = async () => {
     try {
       const response = await addToCart({ productId: product._id });
@@ -100,6 +112,40 @@ export default function ProductInfo({ product }: { product: Product }) {
       toast.success("Remove item From Card");
     }
   };
+  const handleAddToWishlist = async () => {
+    if (loading || isInWishlist) return;
+    setLoading(true);
+    try {
+      const response = await addToWishlist({ productId: product.id });
+      if (response.status === "success") {
+        const wishlistInfo = await getLoggedUserWishlist();
+        dispatch(setWishlistInfo(wishlistInfo));
+        toast.success("Added to wishlist");
+      }
+    } catch {
+      toast.error("Failed to add to wishlist");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleted = async () => {
+    if (deleteLoading || !isInWishlist) return;
+    setDeleteLoading(true);
+    try {
+      const response = await deleteFromWishlist(product.id);
+      if (response.status === "success") {
+        const wishlistInfo = await getLoggedUserWishlist();
+        dispatch(setWishlistInfo(wishlistInfo));
+        toast.success("Removed from wishlist");
+      }
+    } catch {
+      toast.error("Failed to remove product");
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
   return (
     <section className="py-6 ">
       <div className="container mx-auto px-10">
@@ -267,8 +313,17 @@ export default function ProductInfo({ product }: { product: Product }) {
             </div>
 
             <div className="flex  items-center justify-center gap-3 mt-6">
-              <button className="cursor-pointer w-full border border-gray-200  text-sm text-gray-700 rounded-md p-3 bg-white hover:border-green-500 hover:text-green-500 hover:transition-colors ">
-                <FontAwesomeIcon icon={faHeart} /> Add to Wishlist
+              <button
+                onClick={!isInWishlist ? handleAddToWishlist : handleDeleted}
+                className={`cursor-pointer w-full border text-sm rounded-xl flex items-center gap-2 justify-center p-3 hover:transition-colors 
+    ${
+      isInWishlist
+        ? "border-red-300 text-red-600 bg-red-50 hover:bg-red-100"
+        : "border-gray-100 text-gray-700 bg-white hover:border-green-500 hover:text-green-500"
+    }`}
+              >
+                <FontAwesomeIcon icon={faHeart} />
+                {isInWishlist ? "In Wishlist" : "Add to Wishlist"}
               </button>
               <button className="rounded-lg cursor-pointer  border border-gray-200  text-sm text-gray-700 px-4 p-3 bg-white hover:border-green-500 hover:text-green-500 hover:transition-colors ">
                 <FontAwesomeIcon

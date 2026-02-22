@@ -1,11 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer, AuthState } from "../features/auth/store/auth.slice";
 import { cartReducer, CartState } from "../features/cart/store/cart.slice";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
+import {
+  wishlistReducer,
+  WishlistState,
+} from "../features/wishlist/store/wishlist.store";
 
 export type prelodedState = {
   auth: AuthState;
   cart: CartState;
+  wishlist: WishlistState;
 };
 
 export function createStore(preloadedState: prelodedState) {
@@ -13,6 +18,7 @@ export function createStore(preloadedState: prelodedState) {
     reducer: {
       auth: authReducer,
       cart: cartReducer,
+      wishlist: wishlistReducer,
     },
     preloadedState,
   });

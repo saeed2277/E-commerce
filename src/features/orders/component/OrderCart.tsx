@@ -62,8 +62,8 @@ export default function OrderCart({ orderinfo }: { orderinfo: Order }) {
           <div className="relative p-4 rounded-lg border border-gray-100">
             {orderinfo.cartItems && (
               <img
-                src={orderinfo.cartItems[0].product.imageCover}
-                alt={orderinfo.cartItems[0].product.title}
+                src={orderinfo.cartItems?.[0].product.imageCover}
+                alt={orderinfo.cartItems?.[0].product.title}
                 className="h-16 w-16 rounded "
               />
             )}
@@ -98,7 +98,7 @@ export default function OrderCart({ orderinfo }: { orderinfo: Order }) {
               {orderinfo.cartItems.reduce((acc, el) => (acc += el.count), 0)}
               <FontAwesomeIcon icon={faCalendar} />
               <span className="inline-block w-1 h-1 bg-gray-300 rounded-full" />
-              {orderinfo.shippingAddress.city}
+              {orderinfo.shippingAddress?.details || "No address provided"}
               <FontAwesomeIcon icon={faLocationDot} />
               <span className="text-sm">city</span>
             </div>
@@ -208,17 +208,17 @@ export default function OrderCart({ orderinfo }: { orderinfo: Order }) {
                   Delivery Address
                 </h3>
                 <p className="text-md text-gray-800 font-semibold">
-                  {orderinfo.shippingAddress.city}
+                  {orderinfo.shippingAddress?.city || "No city provided"}
                 </p>
                 <p className="text-sm text-gray-800">
-                  {orderinfo.shippingAddress.details}
+                  {orderinfo.shippingAddress?.details || "No Details provided"}
                 </p>
                 <p className="text-sm text-gray-400 flex flex-items mt-2">
                   <FontAwesomeIcon
                     icon={faPhone}
                     className="w-3 h-3 p-1 rounded-md bg-gray-50 mr-2 text-xs"
                   />
-                  {orderinfo.shippingAddress.phone}
+                  {orderinfo.shippingAddress?.phone || "No Phone provided"}
                 </p>
               </div>
               <div className="md:w-1/3 bg-blue-50 rounded-xl p-4">

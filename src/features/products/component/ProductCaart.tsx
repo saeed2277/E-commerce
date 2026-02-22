@@ -1,6 +1,10 @@
 "use client";
 import { faHeart, faEye } from "@fortawesome/free-regular-svg-icons";
-import { faArrowsRotate, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowsRotate,
+  faPlus,
+  faSpinner,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Product } from "../type/product.type";
 import Link from "next/link";
@@ -8,8 +12,14 @@ import Ratings from "@/src/components/ui/Ratings";
 import { addToCart, getToCart } from "../../cart/server/cart.action";
 import { toast } from "react-toastify";
 import { setCartInfo } from "../../cart/store/cart.slice";
-import { useAppDispatch } from "@/src/store/store";
+import { AppState, useAppDispatch } from "@/src/store/store";
 import { useState } from "react";
+import {
+  addToWishlist,
+  getLoggedUserWishlist,
+} from "../../wishlist/server/wishlist.action";
+import { setWishlistInfo } from "../../wishlist/store/wishlist.store";
+import { useSelector } from "react-redux";
 
 export default function ProductCaart({ info }: { info: Product }) {
   const {
@@ -28,6 +38,7 @@ export default function ProductCaart({ info }: { info: Product }) {
     ? Math.round(((price - priceAfterDiscount) / price) * 100)
     : 0;
   const [loading, setLoading] = useState(false);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
 
   const handleAddToCart = async () => {
     if (loading) return;
@@ -59,6 +70,30 @@ export default function ProductCaart({ info }: { info: Product }) {
       toast.error("Failed to add product to cart");
     }
   };
+  const wishlistProducts = useSelector(
+    (state: AppState) => state.wishlist.data,
+  );
+  const isInWishlist = wishlistProducts.some((item) => item.id === info.id);
+  const handleAddToWishlist = async () => {
+    if (wishlistLoading || isInWishlist) return;
+
+    try {
+      setWishlistLoading(true);
+
+      const response = await addToWishlist({ productId: id });
+
+      if (response.status === "success") {
+        const wishlistInfo = await getLoggedUserWishlist();
+        dispatch(setWishlistInfo(wishlistInfo));
+        toast.success(response.message);
+      }
+    } catch (error) {
+      toast.error("Failed to add product to wishlist");
+    } finally {
+      setWishlistLoading(false);
+    }
+  };
+
   return (
     <article className="  bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden relative hover:shadow-lg transition-shadow hover:scale-[1.02] hover:transition-transform">
       <div className="p-4">
@@ -77,10 +112,20 @@ export default function ProductCaart({ info }: { info: Product }) {
           </div>
           <div className="absolute right-0 top-0 flex flex-col gap-3">
             <button
-              aria-label="wishlist"
-              className="w-9 h-9 bg-white rounded-full shadow flex items-center justify-center text-gray-600 hover:text-green-500 transition-color cursor-pointer"
+              disabled={wishlistLoading || isInWishlist}
+              onClick={handleAddToWishlist}
+              className={`w-9 h-9 rounded-full shadow flex items-center justify-center transition-all 
+    ${
+      isInWishlist
+        ? " text-red-500 cursor-not-allowed"
+        : "bg-white text-gray-600 hover:text-red-500 cursor-pointer"
+    }
+  `}
             >
-              <FontAwesomeIcon icon={faHeart} />
+              <FontAwesomeIcon
+                icon={wishlistLoading ? faSpinner : faHeart}
+                className={wishlistLoading ? "animate-spin" : ""}
+              />
             </button>
 
             <button
