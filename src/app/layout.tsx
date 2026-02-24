@@ -21,7 +21,7 @@ let defaultCartState: CartState = {
 
 let defualtWishlistState: WishlistState = {
   data: [],
-  count:0,
+  count: 0,
   isLoading: false,
   error: null,
 };
@@ -55,7 +55,7 @@ export default async function RootLayout({
       const wishlistResponse = await getLoggedUserWishlist();
       WishlistState = {
         data: wishlistResponse.data,
-        count:wishlistResponse.count,
+        count: wishlistResponse.count,
         isLoading: false,
         error: null,
       };

@@ -20,7 +20,7 @@ export default function ContactUs() {
   return (
     <>
       <section className="w-full my-10">
-        <header className="bg-gradient-to-b from-emerald-600 to-green-500 text-white py-15">
+        <header className="bg-linear-to-b from-emerald-600 to-green-500 text-white py-15">
           <div className="container mx-auto px-6">
             <nav className="text-sm text-white mb-4 font-semibold">
               <Link href="/" className="text-gray-300 hover:text-white mr-1">

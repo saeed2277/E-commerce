@@ -22,26 +22,28 @@ import {
   faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faIdCard, faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AppState } from "@/src/store/store";
 import uselogout from "@/src/hooks/uselogout";
 
-
 export default function Navbar() {
-
-  const {logout} = uselogout();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const { isAuthentication } = useSelector(
+  const [isMounted, setIsMounted] = useState(false);
+  const { logout } = uselogout();
+    const { isAuthentication } = useSelector(
     (appState: AppState) => appState.auth,
   );
-    const wishlistProducts = useSelector(
-    (state: AppState) => state.wishlist,
-  );
+  const wishlistProducts = useSelector((state: AppState) => state.wishlist);
   const { numOfCartItems } = useSelector((state: AppState) => state.cart);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   function toggleMenu() {
     setIsMenuOpen(!isMenuOpen);
+  }
+  if (!isMounted) {
+    return null; 
   }
 
   return (
@@ -154,15 +156,11 @@ export default function Navbar() {
 
               {isAuthentication ? (
                 <button
-                type="button"
-                    onClick={logout}  
-                  
+                  type="button"
+                  onClick={logout}
                   className="relative p-1 md:p-2 cursor-pointer hover:text-red-600 transition text-gray-700  "
                 >
-                  <FontAwesomeIcon
-                    icon={faArrowRightFromBracket}
-                    
-                  />
+                  <FontAwesomeIcon icon={faArrowRightFromBracket} />
                   <span className="text-gray-600 absolute -bottom-4 right-0 flex items-center justify-center text-sm">
                     Logout
                   </span>
@@ -284,7 +282,7 @@ export default function Navbar() {
                 <Link href="/">Offers</Link>
               </li>
               <li className=" hover:text-green-500 transition-colors duration-300 ">
-                <Link href="/brands">Brands</Link>
+                <Link href="/branddetails">Brands</Link>
               </li>
             </ul>
           </div>
@@ -333,11 +331,11 @@ export default function Navbar() {
                       className=" flex gap-2 cursor-pointer hover:text-green-600 transition text-gray-700"
                     >
                       <FontAwesomeIcon icon={faHeart} className="w-5 h-5" />
-                       {wishlistProducts.count > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-3 h-3 md:w-5 md:h-5 flex items-center justify-center">
-                    {wishlistProducts.count}
-                  </span>
-                )}
+                      {wishlistProducts.count > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-3 h-3 md:w-5 md:h-5 flex items-center justify-center">
+                          {wishlistProducts.count}
+                        </span>
+                      )}
                       <span className="text-gray-600 ">Wishlist</span>
                     </Link>
                   </li>
@@ -374,7 +372,7 @@ export default function Navbar() {
                     {isAuthentication ? (
                       <li
                         className="mt-9 hover:bg-gray-100 p-1"
-                         onClick={logout} 
+                        onClick={logout}
                       >
                         <Link
                           href=""

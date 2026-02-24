@@ -11,7 +11,6 @@ const dispatch = useDispatch();
 const router = useRouter();
 
  const logout = () => {
-    // نفذ deleteToken بعد click
     deleteToken()
       .then(() => {
         dispatch(setAuth({ isAuthentication: false, userInfo: null }));

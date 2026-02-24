@@ -8,28 +8,37 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Navigation } from "swiper/modules";
 import "swiper/css/navigation";
-export default async function RelatiedProduct({
-  product,
-}: {
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+type Props = {
   product: Product[];
-}) {
+};
+export default function RelatiedProduct({ product }: Props) {
+    const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+
   return (
     <>
       <section className="py-12 px-8 bg-white">
         <div className="container mx-auto">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2 mb-2">
-              <span className="inline-block w-1.5 h-8 bg-gradient-to-b from-green-500 to-green-900 rounded-full mr-1"></span>
+              <span className="inline-block w-1.5 h-8 bg-linear-to-b from-green-500 to-green-900 rounded-full mr-1"></span>
               You May Also <span className="text-green-600">Like</span>
             </h2>
             <div>
-              <button className="swiper-button-next-custom w-9 h-9 bg-gray-200 rounded-full hover:bg-green-100 hover:text-green-500 hover:transition-colors cursor-pointer">
+              <button className="swiper-button-prev-custom w-9 h-9 bg-gray-200 rounded-full hover:bg-green-100 hover:text-green-500 hover:transition-colors cursor-pointer">
                 <FontAwesomeIcon icon={faChevronLeft} />
               </button>
-              <button className="swiper-button-prev-custom w-9 h-9 bg-gray-200 rounded-full hover:bg-green-100 hover:text-green-500 hover:transition-colors cursor-pointer ml-2">
+              <button className="swiper-button-next-custom w-9 h-9 bg-gray-200 rounded-full hover:bg-green-100 hover:text-green-500 hover:transition-colors cursor-pointer ml-2">
                 <FontAwesomeIcon icon={faChevronRight} />
               </button>
             </div>
@@ -39,8 +48,8 @@ export default async function RelatiedProduct({
             <Swiper
               modules={[Navigation]}
               navigation={{
-                nextEl: ".swiper-button-prev-custom",
-                prevEl: ".swiper-button-next-custom",
+                nextEl: ".swiper-button-next-custom",
+                prevEl: ".swiper-button-prev-custom",
               }}
               spaceBetween={10}
               breakpoints={{
@@ -63,9 +72,9 @@ export default async function RelatiedProduct({
               loop={true}
             >
               {product.map((relatedProduct) => (
-                <SwiperSlide>
+                <SwiperSlide >
                   <ProductCaart
-                    key={relatedProduct._id}
+                  key={relatedProduct._id}
                     info={relatedProduct}
                   />
                 </SwiperSlide>

@@ -1,7 +1,7 @@
 "use server";
 
 import axios, { AxiosRequestConfig } from "axios";
-import { Category, ProductsResponse, SingleProductsResponse } from "../type/product.type";
+import {ProductsResponse, SingleProductsResponse } from "../type/product.type";
 
 export async function getProducts(): Promise<ProductsResponse> {
   try {
