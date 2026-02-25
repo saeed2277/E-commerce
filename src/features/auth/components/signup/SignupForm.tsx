@@ -58,7 +58,7 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 ">
+    <div className="min-h-screen ">
       <div className="max-w-md lg:max-w-2xl mx-auto bg-white rounded-lg shadow-2xl p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">

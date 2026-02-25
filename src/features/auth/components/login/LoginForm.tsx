@@ -18,8 +18,6 @@ import { setToken } from "../../server/auth.action";
 import { setAuth } from "../../store/auth.slice";
 import { useDispatch } from "react-redux";
 
-
-
 export default function LoginForm() {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -40,30 +38,26 @@ export default function LoginForm() {
   });
   const onSubmit: SubmitHandler<LoginSchemaType> = async (values) => {
     try {
-      const response =await loginAction(values);
-if(response.success){
-await setToken(response.data.token, values.rememberMe);
-dispatch(setAuth({isAuthentication:true, userInfo:response.data.user}));
+      const response = await loginAction(values);
+      if (response.success) {
+        await setToken(response.data.token, values.rememberMe);
+        dispatch(
+          setAuth({ isAuthentication: true, userInfo: response.data.user }),
+        );
 
-
-  toast.success(response?.message)
-  setTimeout(()=>{
-    router.push("/")
-  },3000)
-}else{
-  if(response?.errors){
-    Object.keys(response.errors).forEach((key) => {
-      setError(key as keyof LoginSchemaType, { message: response.errors[key] });
-    })
-  
-  }
-}
-
-
-
-
-
-
+        toast.success(response?.message);
+        setTimeout(() => {
+          router.push("/");
+        }, 3000);
+      } else {
+        if (response?.errors) {
+          Object.keys(response.errors).forEach((key) => {
+            setError(key as keyof LoginSchemaType, {
+              message: response.errors[key],
+            });
+          });
+        }
+      }
     } catch (error) {
       console.error("Login failed:", error);
     }
@@ -159,7 +153,7 @@ dispatch(setAuth({isAuthentication:true, userInfo:response.data.user}));
                 Keep me signed in
               </label>
               <Link
-                href="/forgotpassword"
+                href="/forget-password"
                 className="text-green-600 hover:underline"
               >
                 Forgot Password?
